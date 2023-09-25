@@ -1,0 +1,50 @@
+---
+- hosts: all
+  become: true
+  gather_facts: yes
+
+  tasks:
+    - name: Install python 3 and pip3
+      package:
+        name:
+          - "{{ python_package }}"
+          - "{{ pip_package }}"
+        state: latest
+
+    - name: Set pip3 as default pip (ub)
+      command: "ln -sf /usr/bin/pip3 /usr/bin/pip"
+      when: ansible_distribution == 'ub'
+
+    - name: set pip3 as default pip (co)
+      command: "ln -sf /usr/bin/pip3 /usr/bin/pip"
+      when: ansible_distribution == 'co'
+
+    - name: set python3 as default python (co)
+      command: "ln -sf /usr/bin/python3 /usr/bin/python"
+      when: ansible_distribution == 'co'
+
+    - name: Set pip3 as default pip (ub)
+      command: "ln -sf /usr/bin/pip3 /usr/bin/pip"
+      when: ansible_distribution == 'ub'
+
+    - name: Set pip3 as default pip (co)
+      command: "ln -sf /usr/bin/pip3 /usr/bin/pip"
+      when: ansible_distribution == 'co'
+
+    - name: Set python3 as default python (co)
+      command: "ln -sf /usr/bin/python3 /usr/bin/pip"
+      when: ansible_distribution == 'co'
+
+    - name: Set python3 as default python (ub)
+      command: "ln -sf /usr/bin/python3 /usr/bin/pip"
+      when: ansible_distribution == 'co'
+
+    - name: Install Java OpenJDK
+      package:
+        name: "{{ java_package }}"
+        state: latest
+     
+    - name: Ensure new user exists
+      user: 
+        name: "{{ new_user }}"
+        state: present
